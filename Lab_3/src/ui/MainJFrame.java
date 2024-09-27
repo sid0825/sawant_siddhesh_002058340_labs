@@ -4,17 +4,26 @@
  */
 package ui;
 
+import java.awt.CardLayout;
+import model.Account;
+import model.AccountDirectory;
+import ui.AccountManager.AccountMngWorkAreaJPanel;
+
 /**
  *
  * @author siddheshsawant
  */
 public class MainJFrame extends javax.swing.JFrame {
 
+    private AccountDirectory accountDirectory;
     /**
      * Creates new form MainJFrame
      */
     public MainJFrame() {
         initComponents();
+        
+        this.accountDirectory = new AccountDirectory();
+        generateDemoData();
     }
 
     /**
@@ -40,6 +49,11 @@ public class MainJFrame extends javax.swing.JFrame {
 
         btnAccountMng.setBackground(new java.awt.Color(153, 204, 255));
         btnAccountMng.setText("Open Account Manager Work Area");
+        btnAccountMng.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAccountMngActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout TopJPanelLayout = new javax.swing.GroupLayout(TopJPanel);
         TopJPanel.setLayout(TopJPanelLayout);
@@ -48,7 +62,7 @@ public class MainJFrame extends javax.swing.JFrame {
             .addGroup(TopJPanelLayout.createSequentialGroup()
                 .addGap(14, 14, 14)
                 .addComponent(btnAccountMng, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(688, Short.MAX_VALUE))
+                .addContainerGap(698, Short.MAX_VALUE))
         );
         TopJPanelLayout.setVerticalGroup(
             TopJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -61,33 +75,31 @@ public class MainJFrame extends javax.swing.JFrame {
         splitPane.setTopComponent(TopJPanel);
 
         userProcessContainer.setBackground(new java.awt.Color(255, 255, 255));
-
-        javax.swing.GroupLayout userProcessContainerLayout = new javax.swing.GroupLayout(userProcessContainer);
-        userProcessContainer.setLayout(userProcessContainerLayout);
-        userProcessContainerLayout.setHorizontalGroup(
-            userProcessContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 943, Short.MAX_VALUE)
-        );
-        userProcessContainerLayout.setVerticalGroup(
-            userProcessContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 683, Short.MAX_VALUE)
-        );
-
+        userProcessContainer.setLayout(new java.awt.CardLayout());
         splitPane.setRightComponent(userProcessContainer);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(splitPane)
+            .addComponent(splitPane, javax.swing.GroupLayout.DEFAULT_SIZE, 953, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(splitPane)
+            .addComponent(splitPane, javax.swing.GroupLayout.DEFAULT_SIZE, 515, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnAccountMngActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAccountMngActionPerformed
+        // TODO add your handling code here:
+        AccountMngWorkAreaJPanel panel = new AccountMngWorkAreaJPanel();
+        userProcessContainer.add("AccountMngWorkAreaJPanel", panel);
+        
+        CardLayout layout = (CardLayout) userProcessContainer.getLayout();
+        layout.next(userProcessContainer);
+    }//GEN-LAST:event_btnAccountMngActionPerformed
 
     /**
      * @param args the command line arguments
@@ -130,4 +142,19 @@ public class MainJFrame extends javax.swing.JFrame {
     private javax.swing.JSplitPane splitPane;
     private javax.swing.JPanel userProcessContainer;
     // End of variables declaration//GEN-END:variables
+
+    private void generateDemoData() {
+        
+        Account newAccount = accountDirectory.addAccount();
+        newAccount.setAccountNumber("4444444444");
+        newAccount.setRoutingNumber("0011223344");
+        newAccount.setBankName("Bank of America");
+        newAccount.setBalance(200);
+        
+        Account anotherNewAccount = accountDirectory.addAccount();
+        anotherNewAccount.setAccountNumber("5555555555");
+        anotherNewAccount.setRoutingNumber("5566778899");
+        anotherNewAccount.setBankName("Santander Bank");
+        anotherNewAccount.setBalance(1200);
+    }
 }
