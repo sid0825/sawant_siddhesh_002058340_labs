@@ -204,6 +204,7 @@ public class ManageAccountsJPanel extends javax.swing.JPanel {
             } else{
                 JOptionPane.showMessageDialog(null, "Account not found. Please check the account number and try again.", "Warning", JOptionPane.WARNING_MESSAGE);
             }
+            txtSearchBox.setText("");
             
          } else{
                 JOptionPane.showMessageDialog(null, "Please type the account number to view.", "Warning", JOptionPane.WARNING_MESSAGE);      
