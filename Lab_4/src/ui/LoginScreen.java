@@ -9,6 +9,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import model.Supplier;
 import model.SupplierDirectory;
+import ui.admin.AdminWorkAreaJPanel;
+import ui.supplier.SupplierWorkAreaJPanel;
 
 /**
  *
@@ -135,7 +137,7 @@ public class LoginScreen extends javax.swing.JPanel {
             }
         }
         
-        mainWorkArea.add("WorkAreaJPanel", seletedPanel);
+        mainWorkArea.add("WorkAreaJPanel", selectedPanel);
         CardLayout layout = (CardLayout) mainWorkArea.getLayout();
         layout.next(mainWorkArea);
 
@@ -170,7 +172,7 @@ public class LoginScreen extends javax.swing.JPanel {
         
     }
 
-    private void populateSupplierCombo() {
+    public void populateSupplierCombo() {
         
         cmbSuppliers.removeAllItems();
         
