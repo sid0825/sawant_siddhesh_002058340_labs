@@ -126,7 +126,7 @@ public class AdminWorkAreaJPanel extends javax.swing.JPanel {
         ManageSuppliers panel = new ManageSuppliers(workArea, supplierDirectory);
         workArea.add("ManageSupplierAdministrative", panel);
         CardLayout layout = (CardLayout) workArea.getLayout();
-        layout.previous(workArea);
+        layout.next(workArea);
 
     }//GEN-LAST:event_btnManageSuppliersActionPerformed
 

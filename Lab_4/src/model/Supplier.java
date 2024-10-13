@@ -41,7 +41,6 @@ public class Supplier {
         return productCatalog;
     }
     
-    
     @Override
     public String toString() {
         return supplyName;

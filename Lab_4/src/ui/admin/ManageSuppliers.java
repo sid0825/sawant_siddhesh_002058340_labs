@@ -31,6 +31,20 @@ public class ManageSuppliers extends javax.swing.JPanel {
         refreshTable();
 
     }
+    
+    public void refreshTable() {
+        
+        DefaultTableModel model = (DefaultTableModel)tblSuppliers.getModel();
+        model.setRowCount(0);
+        
+        for(Supplier s : supplierDirectory.getSupplierList()) {
+            Object row[] = new Object[1];
+            row[0] = s;
+           // row[1] = s.getProductCatalog().getProductCount() == 0 ? "None" : s.getProductCatalog().getProductCount();
+            model.addRow(row);
+        }
+
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -178,16 +192,5 @@ public class ManageSuppliers extends javax.swing.JPanel {
     private javax.swing.JTable tblSuppliers;
     // End of variables declaration//GEN-END:variables
 
-    public void refreshTable() {
-        DefaultTableModel model = (DefaultTableModel)tblSuppliers.getModel();
-        model.setRowCount(0);
-        
-        for(Supplier s : supplierDirectory.getSupplierList()) {
-            Object row[] = new Object[1];
-            row[0] = s;
-           // row[1] = s.getProductCatalog().getProductCount() == 0 ? "None" : s.getProductCatalog().getProductCount();
-            model.addRow(row);
-        }
 
-    }
 }

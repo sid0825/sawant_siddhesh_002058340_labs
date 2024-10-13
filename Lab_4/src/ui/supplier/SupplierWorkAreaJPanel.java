@@ -184,7 +184,10 @@ public class SupplierWorkAreaJPanel extends javax.swing.JPanel {
         //        layout.next(userProcessContainer);
     }//GEN-LAST:event_PerformanceActionPerformed
 
-
+    public String toString(){
+        return "Supplier";
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Performance;
     private javax.swing.JButton btnLogOut;

@@ -31,6 +31,19 @@ public class ViewSupplier extends javax.swing.JPanel {
         
         refreshTable();
     }
+    
+    private void refreshTable() {
+        DefaultTableModel model = (DefaultTableModel)productCatalog.getModel();
+        model.setRowCount(0);
+        
+        for(Product p : supplier.getProductCatalog().getProductCatalog()){
+            Object row[] = new Object[3];
+            row[0] = p;
+            row[1] = p.getId();
+            row[2] = p.getPrice();
+            model.addRow(row);
+        }
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -120,16 +133,5 @@ public class ViewSupplier extends javax.swing.JPanel {
     private javax.swing.JTable productCatalog;
     // End of variables declaration//GEN-END:variables
 
-    private void refreshTable() {
-        DefaultTableModel model = (DefaultTableModel)productCatalog.getModel();
-        model.setRowCount(0);
-        
-        for(Product p : supplier.getProductCatalog().getProductCatalog()){
-            Object row[] = new Object[3];
-            row[0] = p;
-            row[1] = p.getId();
-            row[2] = p.getPrice();
-            model.addRow(row);
-        }
-    }
+
 }

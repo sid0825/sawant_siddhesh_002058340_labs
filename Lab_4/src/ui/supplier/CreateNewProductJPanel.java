@@ -4,19 +4,28 @@
  */
 package ui.supplier;
 
+import java.awt.CardLayout;
+import java.awt.Component;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import model.Product;
+import model.Supplier;
 
 /**
  *
  * @author siddheshsawant
  */
 public class CreateNewProductJPanel extends javax.swing.JPanel {
+    JPanel workArea;
+    Supplier supplier;
 
     /**
      * Creates new form CreateNewProductJPanel
      */
-    public CreateNewProductJPanel() {
+    public CreateNewProductJPanel(JPanel workArea, Supplier supplier) {
         initComponents();
+        this.supplier = supplier;
+        this.workArea = workArea;
     }
 
     /**
@@ -152,4 +161,14 @@ public class CreateNewProductJPanel extends javax.swing.JPanel {
     private javax.swing.JTextField txtName;
     private javax.swing.JTextField txtPrice;
     // End of variables declaration//GEN-END:variables
+
+    private void backAction() {
+        workArea.remove(this);
+        Component[] componentArray = workArea.getComponents();
+        Component component = componentArray[componentArray.length - 1];
+        ManageProductCatalogJPanel manageProductCatalogJPanel = (ManageProductCatalogJPanel) component;
+        manageProductCatalogJPanel.refreshTable();
+        CardLayout layout = (CardLayout) workArea.getLayout();
+        layout.previous(workArea);
+    }
 }
