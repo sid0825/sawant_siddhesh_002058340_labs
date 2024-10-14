@@ -182,7 +182,7 @@ public class ManageProductCatalogJPanel extends javax.swing.JPanel {
         }
         
         Product selectedProduct = (Product) tblProducts.getValueAt(row, 0);
-        ViewProductDetailJPanel vpdjp = new ViewProductDetailJPanel(workArea, selectedProduct);
+        ViewProductDetailJPanel vpdjp = new ViewProductDetailJPanel(workArea, selectedProduct, supplier);
         workArea.add("ViewProductDetailJPanel", vpdjp);
         CardLayout layout = (CardLayout) workArea.getLayout();
         layout.next(workArea);

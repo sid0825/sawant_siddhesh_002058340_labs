@@ -175,7 +175,7 @@ public class SupplierWorkAreaJPanel extends javax.swing.JPanel {
 
     private void btnSupplierProfileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSupplierProfileActionPerformed
         // TODO add your handling code here:
-        UpdateSupplier us = new UpdateSupplier(workArea, supplier); 
+        UpdateSupplier us = new UpdateSupplier(workArea, supplier, lblWelcome); 
         workArea.add("AddSupplier", us);
     
         CardLayout layout = (CardLayout) workArea.getLayout();
