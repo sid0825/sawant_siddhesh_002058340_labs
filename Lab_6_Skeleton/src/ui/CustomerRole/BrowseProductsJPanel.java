@@ -35,9 +35,10 @@ public class BrowseProductsJPanel extends javax.swing.JPanel {
         this.userProcessContainer = userProcessContainer;
         this.supplierDirectory = supplierDirectory;
         this.masterOrderList = masterOrderList;
+        String productName = null;
         
         populateCombo();
-        populateProductTable();
+        populateProductTable(productName);
     }
 
     
@@ -303,7 +304,7 @@ public class BrowseProductsJPanel extends javax.swing.JPanel {
     private void cmbSupplierActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbSupplierActionPerformed
         // TODO add your handling code here:
         
-        populateProductTable();
+       // populateProductTable();
     }//GEN-LAST:event_cmbSupplierActionPerformed
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
