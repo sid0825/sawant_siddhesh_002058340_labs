@@ -8,13 +8,15 @@ package ui.CustomerRole;
 import model.Product;
 import model.Supplier;
 import model.SupplierDirectory;
-import ui.SupplierRole.ViewProductDetailJPanel;
+import ui.CustomerRole.ViewProductDetailJPanel;
 import java.awt.CardLayout;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
 import model.MasterOrderList;
+import model.Order;
+import model.OrderItem;
 
 
 /**
@@ -27,6 +29,7 @@ public class BrowseProductsJPanel extends javax.swing.JPanel {
     JPanel userProcessContainer;
     SupplierDirectory supplierDirectory;
     MasterOrderList masterOrderList;
+    private Order currentOrder;
         
     /** Creates new form BrowseProducts */
     public BrowseProductsJPanel(JPanel userProcessContainer, SupplierDirectory supplierDirectory, MasterOrderList masterOrderList) {
@@ -37,6 +40,7 @@ public class BrowseProductsJPanel extends javax.swing.JPanel {
         this.masterOrderList = masterOrderList;
         String productName = null;
         
+        currentOrder = new Order();
         populateCombo();
         populateProductTable(productName);
     }
@@ -147,6 +151,11 @@ public class BrowseProductsJPanel extends javax.swing.JPanel {
         spnQuantity.setModel(new javax.swing.SpinnerNumberModel(0, 0, null, 1));
 
         btnAddToCart.setText("Add to Cart");
+        btnAddToCart.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddToCartActionPerformed(evt);
+            }
+        });
 
         btnProductDetails.setText("View Product Details");
         btnProductDetails.addActionListener(new java.awt.event.ActionListener() {
@@ -310,10 +319,26 @@ public class BrowseProductsJPanel extends javax.swing.JPanel {
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
         // TODO add your handling code here:
         
+        userProcessContainer.remove(this);
+        CardLayout layout = (CardLayout) userProcessContainer.getLayout();
+        layout.previous(userProcessContainer);
+        
     }//GEN-LAST:event_btnBackActionPerformed
 
     private void btnProductDetailsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProductDetailsActionPerformed
         // TODO add your handling code here:
+        
+        int selectedRowIndex = tblProductCatalog.getSelectedRow();
+        if (selectedRowIndex < 0){
+            JOptionPane.showConfirmDialog(this, "Please select the product first.");
+            return;
+        }
+        
+        Product product = (Product) tblProductCatalog.getValueAt(selectedRowIndex, 0);
+        ViewProductDetailJPanel vpdp = new ViewProductDetailJPanel(userProcessContainer, product);
+        userProcessContainer.add("ViewProductDetailJPanel", vpdp);
+        CardLayout layout = (CardLayout) userProcessContainer.getLayout();
+        layout.next(userProcessContainer);
         
     }//GEN-LAST:event_btnProductDetailsActionPerformed
 
@@ -344,6 +369,63 @@ public class BrowseProductsJPanel extends javax.swing.JPanel {
     private void txtSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSearchActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtSearchActionPerformed
+
+    private void btnAddToCartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddToCartActionPerformed
+        // TODO add your handling code here:
+        int selectedRowIndex = tblProductCatalog.getSelectedRow();
+        if (selectedRowIndex < 0){
+            JOptionPane.showConfirmDialog(this, "Please select the product first.");
+            return;
+        }
+        
+        Product product = (Product) tblProductCatalog.getValueAt(selectedRowIndex, 0);
+        double salesPrice = 0;
+        int quant = 0;
+        
+        try{
+            
+            salesPrice = Double.parseDouble(txtSalesPrice.getText());
+            quant = (Integer) spnQuantity.getValue();
+            
+        } catch (Exception e){
+            JOptionPane.showMessageDialog(this, "Please check the price and quantity fields.");
+            return;
+        }
+        
+        if (salesPrice < product.getPrice()){
+            JOptionPane.showMessageDialog(this, "Price should be more than it is set in the price.");
+            return;
+        }
+        
+        OrderItem item = currentOrder.findProduct(product);
+        
+        if (item == null) {
+            
+            if (product.getAvail() >= quant){
+                
+                currentOrder.addNewOrderItem(product, salesPrice, quant);
+                product.setAvail(product.getAvail() - quant);
+                
+            } else {
+                JOptionPane.showMessageDialog(this, "Please check the product availability.");
+                return;
+            }
+        } else{
+            
+            int oldQuant = item.getQuantity();
+            if (item.getProduct().getAvail() + oldQuant < quant){
+                JOptionPane.showMessageDialog(this, "Please check the product availability.");
+                return;
+            }
+            
+            item.getProduct().setAvail(item.getProduct().getAvail() + oldQuant - quant);
+            item.setQuantity(quant);
+            
+        }
+        
+        
+        
+    }//GEN-LAST:event_btnAddToCartActionPerformed
 
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
