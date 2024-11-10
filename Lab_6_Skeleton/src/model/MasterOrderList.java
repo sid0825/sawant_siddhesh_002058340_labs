@@ -25,6 +25,9 @@ public class MasterOrderList {
     public void setOrderList(ArrayList<Order> orderList) {
         this.orderList = orderList;
     }
+     public void addNewOrder(Order order){
+        this.orderList.add(order);
+    }
     
     
     
